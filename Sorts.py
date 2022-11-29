@@ -44,6 +44,7 @@ def mergeSort(vector, aux, i, f):
         mergeSort(vector, aux, i, m)
         mergeSort(vector, aux, m + 1, f)
         merge(vector, aux, i, m, f)
+    return vector
 
 def merge(vector, aux, i, m, f):
     i1 = i
@@ -69,24 +70,57 @@ def merge(vector, aux, i, m, f):
     for j in range(i, f+1):
         vector[j] = aux[j]
 
+def radixSort(vector, base, d):
+    n = len(vector)
+    queue = []
+    for i in range(base):
+        queue.append([])
+    i = 0
+    factor = 1
+    while i < d:
+        for j in range(n):
+            queue[floor(vector[j] / factor) % base].append(vector[j])
+        
+        j = 0
+        k = 0
+        while j < base:
+            while len(queue[j]) != 0:
+                vector[k] = queue[j].pop(0)
+                k += 1
+            j += 1
+        
+        factor *= base
+        i += 1
+    return vector
+
 def main():
-    vector = np.random.randint(1000, size = 10000)
+    vector = np.random.randint(999, size = 1000)
+    
     st = time()
     bubbleSort(vector.copy())
     et = time()
     print('Bubble Sort: ', et - st)
+    
     st = time()
     selectionSort(vector.copy())
     et = time()
     print('Selection Sort: ', et - st)
+    
     st = time()
     insertionSort(vector.copy())
     et = time()
     print('Insertion Sort: ', et - st)
+    
     st = time()
     v = vector.copy()
     mergeSort(v, v, 0, len(v)-1)
     et = time()
     print('Merge Sort: ', et - st)
+    
+    st = time()
+    v = vector.copy()
+    v1 = radixSort(v, 10, 3)
+    et = time()
+    print('Radix Sort: ', et - st)
     
 main()
