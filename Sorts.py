@@ -245,51 +245,61 @@ def Partition(vector, left, right):
 
 # Função principal
 def main():
-    vector = np.random.randint(999, size = 1000)
+    vector = np.random.randint(999, size = 10)
+    
+    print(vector)
     
     st = time()
-    bubbleSort(vector.copy())
+    v1 = bubbleSort(vector.copy())
     et = time()
     print('Bubble Sort: ', et - st)
+    print(v1)
     
     st = time()
-    selectionSort(vector.copy())
+    v1 = selectionSort(vector.copy())
     et = time()
     print('Selection Sort: ', et - st)
+    print(v1)
     
     st = time()
-    insertionSort(vector.copy())
+    v1 = insertionSort(vector.copy())
     et = time()
     print('Insertion Sort: ', et - st)
+    print(v1)
     
     st = time()
     v = vector.copy()
-    mergeSort(v, v, 0, len(v)-1)
+    v1 = mergeSort(v, v, 0, len(v)-1)
     et = time()
     print('Merge Sort: ', et - st)
+    print(v1)
     
     st = time()
     v = vector.copy()
     v1 = radixSort(v, 10, 3)
     et = time()
     print('Radix Sort: ', et - st)
+    print(v1)
     
     st = time()
     v = vector.copy()
-    heapSort(v)
+    v1 = heapSort(v)
     et = time()
     print('Heap Sort: ', et - st)
+    print(v1)
     
     st = time()
     v = vector.copy()
-    quickSort(v, 1, len(v))
+    v1 = quickSort(v, 1, len(v))
     et = time()
     print('Quick Sort: ', et - st)
+    print(v1)
     
     st = time()
     v = vector.copy().tolist()
     v.sort()
     et = time()
     print('Sort: ', et - st)
+    print(v1)
     
 main()
