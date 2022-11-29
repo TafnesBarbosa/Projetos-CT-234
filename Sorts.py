@@ -5,12 +5,114 @@ from math import floor
 
 # Making a heap
 class heap:
-    def __init__(self):
+    def __init__(self, tipo):
         self.vector = []
+        self.tipo = tipo
         
-    def build(vector):
-        pass
+    def __str__(self):
+        return str(self.vector)
+        
+    def sift(self, i, n):
+        esq = 2 * i
+        dire = 2 * i + 1
+        maimenor = i
+        if self.tipo == 'max':
+            if esq <= n and self.vector[esq - 1] > self.vector[i - 1]:
+                maimenor = esq
+            if dire <= n and self.vector[dire - 1] > self.vector[maimenor - 1]:
+                maimenor = dire
+            if maimenor != i:
+                aux = self.vector[i - 1]
+                self.vector[i - 1] = self.vector[maimenor - 1]
+                self.vector[maimenor - 1] = aux
+                self.sift(maimenor, n)
+        elif self.tipo == 'min':
+            if esq <= n and self.vector[esq - 1] < self.vector[i - 1]:
+                maimenor = esq
+            if dire <= n and self.vector[dire - 1] < self.vector[maimenor - 1]:
+                maimenor = dire
+            if maimenor != i:
+                aux = self.vector[i - 1]
+                self.vector[i - 1] = self.vector[maimenor - 1]
+                self.vector[maimenor - 1] = aux
+                self.sift(maimenor, n)
+    
+    def build(self, vector):
+        self.vector = vector
+        self.n = len(vector)
+        n = self.n
+        for i in range(floor(n / 2), 0, -1):
+            self.sift(i, n)
 
+    def Max(self):
+        if self.tipo == 'max':
+            return self.vector[0]
+        else:
+            return 'Error, minimum heap.'
+    
+    def Min(self):
+        if self.tipo == 'min':
+            return self.vector[0]
+        else:
+            return 'Error, maximum heap.'
+    
+    def ExtractMax(self):
+        if self.tipo == 'max':
+            if self.n < 1:
+                return 'heap underflow'
+            else:
+                Max = self.vector[0]
+                self.vector[0] = self.vector[-1]
+                self.vector.pop()
+                self.n -= 1
+                self.sift(1, self.n)
+                return Max
+        else:
+            return 'Error, minimum heap.'
+            
+    def ExtractMin(self):
+        if self.tipo == 'min':
+            if self.n < 1:
+                return 'heap underflow'
+            else:
+                Min = self.vector[0]
+                self.vector[0] = self.vector[-1]
+                self.vector.pop()
+                self.n -= 1
+                self.sift(1, self.n)
+                return Min
+        else:
+            return 'Error, minimum heap.'
+    
+    def Modify(self, k, x):
+        if self.tipo == 'max':
+            if k > self.n or k < 1:
+                return 'index error'
+            else:
+                self.vector[k - 1] = x
+                while k > 1 and self.vector[floor(k / 2) - 1] < self.vector[k - 1]:
+                    aux = self.vector[k-1]
+                    self.vector[k-1] = self.vector[floor(k / 2) - 1]
+                    self.vector[floor(k / 2) - 1] = aux
+                    k = floor(k / 2)
+                self.sift(k, self.n)
+        else:
+            if k > self.n or k < 1:
+                return 'index error'
+            else:
+                self.vector[k - 1] = x
+                while k > 1 and self.vector[floor(k / 2) - 1] > self.vector[k - 1]:
+                    aux = self.vector[k-1]
+                    self.vector[k-1] = self.vector[floor(k / 2) - 1]
+                    self.vector[floor(k / 2) - 1] = aux
+                    k = floor(k / 2)
+                self.sift(k, self.n)
+    
+    def Insert(self, x):
+        self.vector.append(0)
+        self.n += 1
+        self.Modify(self.n, x)
+    
 # Ordenação por BubbleSort
 def bubbleSort(vector):
     n = len(vector)
@@ -107,7 +209,7 @@ def radixSort(vector, base, d):
 
 # Função principal
 def main():
-    vector = np.random.randint(999, size = 1000)
+    vector = np.random.randint(999, size = 10)
     
     st = time()
     bubbleSort(vector.copy())
@@ -135,5 +237,16 @@ def main():
     v1 = radixSort(v, 10, 3)
     et = time()
     print('Radix Sort: ', et - st)
+    
+    h = heap('max')
+    h.build(vector.copy().tolist())
+    print(vector.tolist(), '\n', h)
+    print(h.ExtractMax(), '\n', h)
+    h.Modify(8, 15)
+    print(h)
+    h.Insert(999)
+    print(h)
+    
+    
     
 main()
