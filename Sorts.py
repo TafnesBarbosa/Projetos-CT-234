@@ -224,6 +224,7 @@ def quickSort(vector, mini, maxi):
         p = Partition(vector, mini, maxi)
         quickSort(vector, mini, p - 1)
         quickSort(vector, p + 1, maxi)
+    return vector
 
 def Partition(vector, left, right):
     pivot = vector[left - 1]
@@ -269,7 +270,7 @@ def main():
     
     st = time()
     v = vector.copy()
-    v1 = mergeSort(v, v, 0, len(v)-1)
+    v1 = mergeSort(v, v.copy(), 0, len(v)-1)
     et = time()
     print('Merge Sort: ', et - st)
     print(v1)
@@ -300,6 +301,6 @@ def main():
     v.sort()
     et = time()
     print('Sort: ', et - st)
-    print(v1)
+    print(v)
     
 main()
