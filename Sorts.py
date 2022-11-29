@@ -218,6 +218,31 @@ def heapSort(vector):
         h.sift(1, i - 1)
     return h.vector
 
+# Ordenção por QuickSort
+def quickSort(vector, mini, maxi):
+    if mini < maxi:
+        p = Partition(vector, mini, maxi)
+        quickSort(vector, mini, p - 1)
+        quickSort(vector, p + 1, maxi)
+
+def Partition(vector, left, right):
+    pivot = vector[left - 1]
+    l = left + 1
+    r = right
+    while True:
+        while l < right and vector[l - 1] < pivot:
+            l += 1
+        while r > left and vector[r - 1] >= pivot:
+            r -= 1
+        if l >= r:
+            break
+        aux = vector[l - 1]
+        vector[l - 1] = vector[r - 1]
+        vector[r - 1] = aux
+    vector[left - 1] = vector[r - 1]
+    vector[r - 1] = pivot
+    return r
+
 # Função principal
 def main():
     vector = np.random.randint(999, size = 1000)
@@ -254,5 +279,17 @@ def main():
     heapSort(v)
     et = time()
     print('Heap Sort: ', et - st)
+    
+    st = time()
+    v = vector.copy()
+    quickSort(v, 1, len(v))
+    et = time()
+    print('Quick Sort: ', et - st)
+    
+    st = time()
+    v = vector.copy().tolist()
+    v.sort()
+    et = time()
+    print('Sort: ', et - st)
     
 main()
