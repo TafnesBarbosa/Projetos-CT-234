@@ -3,6 +3,14 @@ from time import time
 import numpy as np
 from math import floor
 
+# Making a heap
+class heap:
+    def __init__(self):
+        self.vector = []
+        
+    def build(vector):
+        pass
+
 # Ordenação por BubbleSort
 def bubbleSort(vector):
     n = len(vector)
@@ -13,7 +21,8 @@ def bubbleSort(vector):
                 vector[i] = vector[i-1]
                 vector[i-1] = aux
     return vector
-    
+
+# Ordenação por SelectionSort
 def selectionSort(vector):
     n = len(vector)
     for j in range(n-1):
@@ -25,7 +34,8 @@ def selectionSort(vector):
         vector[aux_min] = vector[j]
         vector[j] = aux
     return vector
-    
+
+# Ordenação por InsertionSort
 def insertionSort(vector):
     n = len(vector)
     for i in range(1, n):
@@ -37,7 +47,8 @@ def insertionSort(vector):
                 break
         vector[j] = aux
     return vector
-    
+
+# Ordenação por MergeSort
 def mergeSort(vector, aux, i, f):
     if i < f:
         m = floor((i + f) / 2)
@@ -70,6 +81,7 @@ def merge(vector, aux, i, m, f):
     for j in range(i, f+1):
         vector[j] = aux[j]
 
+# Ordenação por RadixSort
 def radixSort(vector, base, d):
     n = len(vector)
     queue = []
@@ -93,6 +105,7 @@ def radixSort(vector, base, d):
         i += 1
     return vector
 
+# Função principal
 def main():
     vector = np.random.randint(999, size = 1000)
     
