@@ -207,9 +207,20 @@ def radixSort(vector, base, d):
         i += 1
     return vector
 
+# Ordenação por HeapSort
+def heapSort(vector):
+    h = heap('max')
+    h.build(vector)
+    for i in range(h.n, 0, -1):
+        aux = h.vector[i - 1]
+        h.vector[i - 1] = h.vector[0]
+        h.vector[0] = aux
+        h.sift(1, i - 1)
+    return h.vector
+
 # Função principal
 def main():
-    vector = np.random.randint(999, size = 10)
+    vector = np.random.randint(999, size = 1000)
     
     st = time()
     bubbleSort(vector.copy())
@@ -238,15 +249,10 @@ def main():
     et = time()
     print('Radix Sort: ', et - st)
     
-    h = heap('max')
-    h.build(vector.copy().tolist())
-    print(vector.tolist(), '\n', h)
-    print(h.ExtractMax(), '\n', h)
-    h.Modify(8, 15)
-    print(h)
-    h.Insert(999)
-    print(h)
-    
-    
+    st = time()
+    v = vector.copy()
+    heapSort(v)
+    et = time()
+    print('Heap Sort: ', et - st)
     
 main()
