@@ -1,6 +1,7 @@
 # Ordenações
 from time import time
 import numpy as np
+from math import floor
 
 # Ordenação por BubbleSort
 def bubbleSort(vector):
@@ -37,8 +38,39 @@ def insertionSort(vector):
         vector[j] = aux
     return vector
     
+def mergeSort(vector, aux, i, f):
+    if i < f:
+        m = floor((i + f) / 2)
+        mergeSort(vector, aux, i, m)
+        mergeSort(vector, aux, m + 1, f)
+        merge(vector, aux, i, m, f)
+
+def merge(vector, aux, i, m, f):
+    i1 = i
+    i2 = i
+    i3 = m + 1
+    while i2 <= m and i3 <= f:
+        if vector[i2] < vector[i3]:
+            aux[i1] = vector[i2]
+            i1 += 1
+            i2 += 1
+        else:
+            aux[i1] = vector[i3]
+            i1 += 1
+            i3 += 1
+    while i2 <= m:
+        aux[i1] = vector[i2]
+        i1 += 1
+        i2 += 1
+    while i3 <= f:
+        aux[i1] = vector[i3]
+        i1 += 1
+        i3 += 1
+    for j in range(i, f+1):
+        vector[j] = aux[j]
+
 def main():
-    vector = np.random.randint(1000, size = 1000)
+    vector = np.random.randint(1000, size = 10000)
     st = time()
     bubbleSort(vector.copy())
     et = time()
@@ -51,5 +83,10 @@ def main():
     insertionSort(vector.copy())
     et = time()
     print('Insertion Sort: ', et - st)
+    st = time()
+    v = vector.copy()
+    mergeSort(v, v, 0, len(v)-1)
+    et = time()
+    print('Merge Sort: ', et - st)
     
 main()
